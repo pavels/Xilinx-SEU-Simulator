@@ -1,0 +1,7 @@
+NET "clk" TNM_NET = "clk";
+TIMESPEC TS_clk = PERIOD "clk" 50 MHz HIGH 50 %;
+
+NET "clk" LOC = A8 | IOSTANDARD = LVTTL ;
+NET "rst" LOC = J13 | IOSTANDARD = LVTTL ;
+NET "serialIn"  LOC = "T13" | IOSTANDARD = LVTTL ; 
+NET "serialOut"  LOC = "R12" | IOSTANDARD = LVTTL ;

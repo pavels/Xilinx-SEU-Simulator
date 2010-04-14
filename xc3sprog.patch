@@ -1,0 +1,107 @@
+diff -ur xc3sprog-r216/devicedb.cpp xc3sprog-r216-patched/devicedb.cpp
+--- xc3sprog-r216/devicedb.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/devicedb.cpp	2010-04-14 22:49:45.000000000 +0200
+@@ -30,6 +30,8 @@
+ 
+ #include <stdlib.h>
+ #include <string.h>
++#include <stdio.h>
++#include <stdint.h>
+ #include "devicedb.h"
+ 
+ #include "config.h"
+diff -ur xc3sprog-r216/iofx2.cpp xc3sprog-r216-patched/iofx2.cpp
+--- xc3sprog-r216/iofx2.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/iofx2.cpp	2010-04-14 22:47:56.000000000 +0200
+@@ -20,6 +20,7 @@
+ 
+ #include <errno.h>
+ #include <sys/time.h>
++#include <stdio.h>
+ 
+ #include <xguff/usrp_interfaces.h>
+ #include <xguff/usrp_commands.h>
+diff -ur xc3sprog-r216/ioparport.cpp xc3sprog-r216-patched/ioparport.cpp
+--- xc3sprog-r216/ioparport.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/ioparport.cpp	2010-04-14 22:47:01.000000000 +0200
+@@ -235,7 +235,7 @@
+ 
+     if ((status & PCIII_TDO_MASK) && (!(data & PCIII_PROG_EN_N))) {
+ 	fprintf(stderr,"Missing power for Parallel Cable III\n");
+-	return NO_CABLE;
++	//return NO_CABLE;
+     }
+ 
+     data = (data & PCIII_CHECK_OUT) ? (data & ~PCIII_CHECK_OUT) : (data | PCIII_CHECK_OUT);
+diff -ur xc3sprog-r216/ioxpc.cpp xc3sprog-r216-patched/ioxpc.cpp
+--- xc3sprog-r216/ioxpc.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/ioxpc.cpp	2010-04-14 22:48:23.000000000 +0200
+@@ -23,6 +23,8 @@
+ #include <errno.h>
+ #include <sys/time.h>
+ 
++#include <stdio.h>
++
+ #include <xguff/usrp_interfaces.h>
+ #include <xguff/usrp_commands.h>
+ #include <string.h>
+diff -ur xc3sprog-r216/jedecfile.cpp xc3sprog-r216-patched/jedecfile.cpp
+--- xc3sprog-r216/jedecfile.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/jedecfile.cpp	2010-04-14 22:50:29.000000000 +0200
+@@ -24,6 +24,7 @@
+ #include <string.h>
+ #include <strings.h>
+ #include <errno.h>
++#include <stdio.h>
+ 
+ #include "jedecfile.h"
+ #include "io_exception.h"
+diff -ur xc3sprog-r216/jedecparse.cpp xc3sprog-r216-patched/jedecparse.cpp
+--- xc3sprog-r216/jedecparse.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/jedecparse.cpp	2010-04-14 22:50:06.000000000 +0200
+@@ -23,7 +23,7 @@
+ */
+ 
+ 
+-
++#include <stdio.h>
+ #include "jedecfile.h"
+ #include "io_exception.h"
+ 
+diff -ur xc3sprog-r216/progalgspiflash.cpp xc3sprog-r216-patched/progalgspiflash.cpp
+--- xc3sprog-r216/progalgspiflash.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/progalgspiflash.cpp	2010-04-14 22:52:45.000000000 +0200
+@@ -1,8 +1,10 @@
++#include <stdint.h>
+ #include "progalgspiflash.h"
+ #include <stdlib.h>
+ #include <assert.h>
+ #include <string.h>
+ 
++
+ const byte ProgAlgSPIFlash::USER1=0x02;
+ const byte ProgAlgSPIFlash::USER2=0x03;
+ const byte ProgAlgSPIFlash::JSTART=0x0c;
+diff -ur xc3sprog-r216/progalgxc3s.cpp xc3sprog-r216-patched/progalgxc3s.cpp
+--- xc3sprog-r216/progalgxc3s.cpp	2009-07-02 11:05:13.000000000 +0200
++++ xc3sprog-r216-patched/progalgxc3s.cpp	2010-04-14 22:47:01.000000000 +0200
+@@ -132,10 +132,10 @@
+ }
+ void ProgAlgXC3S::array_program(BitFile &file)
+ {
+-  flow_enable();
++//  flow_enable();
+   /* JPROGAM: Trigerr reconfiguration, not explained in ug332, but
+      DS099 Figure 28:  Boundary-Scan Configuration Flow Diagram (p.49) */
+-  jtag->shiftIR(&JPROGRAM);
++//  jtag->shiftIR(&JPROGRAM);
+ 
+   switch(family)
+     {
+@@ -159,5 +159,5 @@
+   /* use leagcy, if large transfers are faster then chunks */
+   flow_program_legacy(file);
+   /*flow_array_program(file);*/
+-  flow_disable();
++//  flow_disable();
+ }

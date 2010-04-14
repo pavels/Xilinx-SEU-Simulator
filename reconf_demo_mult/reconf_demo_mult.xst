@@ -1,0 +1,12 @@
+run
+-ifn PRJ_FILE 
+-ifmt mixed 
+-ofn DESIGN 
+-ofmt NGC 
+-p FPGA 
+-top TOP  
+-read_cores yes 
+-fsm_extract yes 
+-iob true 
+-bus_delimiter ()
+-opt_mode Speed
